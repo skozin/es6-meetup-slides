@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Code Hipsters</title>
+    <script>
+      window.brunch = window.brunch || {};
+      window.brunch.server = 'localhost';
+      
+    </script>
+    <link rel="stylesheet" href="stylesheets/app-presenter.css">
+    <script src="javascripts/vendor-presenter.js"></script>
+    <script src="javascripts/app-presenter.js"></script>
+    <script>
+      require('scripts/initialize');
+      
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-slide-name="first-slide" data-background="#0AAED5">
+          <h1 class="title">ES6 Generators</h1>
+          <div class="speaker">
+            <p class="auther">Семён Козин</p>
+            <p class="company">Songsterr</p>
+          </div>
+        </section>
+        <section>
+          <h2>Знакомы ли вы с генераторами<br>в JS?</h2>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="width: 1000px; left: 300px; top: 150px;" class="highlight hljs lang-js">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;
+  <span class="hljs-comment">// вернуть i и "замереть"</span>
+  i = i + <span class="hljs-number">1</span>;
+  <span class="hljs-comment">// вернуть i и "замереть"</span>
+  i = i + <span class="hljs-number">2</span>;
+  <span class="hljs-comment">// вернуть i</span>
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="width: 1000px; left: 300px; top: 150px;" class="highlight hljs lang-js">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;
+  <span class="hl-g"><span class="hljs-keyword">return</span> i</span>;
+  i = i + <span class="hljs-number">1</span>;
+  <span class="hl-g"><span class="hljs-keyword">return</span> i</span>;
+  i = i + <span class="hljs-number">2</span>;
+  <span class="hl-g"><span class="hljs-keyword">return</span> i</span>;
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js right-half">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">return</span> i;
+  i = i + <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">return</span> i;
+  i = i + <span class="hljs-number">2</span>;
+  <span class="hljs-keyword">return</span> i;
+}</pre>
+            </div>
+            <div class="highlight hljs lang-js small left-half">
+              <pre><span class="hljs-keyword">var</span> a = f();</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js right-half">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> <span class="hl-o">i = <span class="hljs-number">0</span></span>;
+  <span class="hljs-keyword">return</span> i;
+  i = i + <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">return</span> i;
+  i = i + <span class="hljs-number">2</span>;
+  <span class="hljs-keyword">return</span> i;
+}</pre>
+            </div>
+            <div class="highlight hljs lang-js small left-half">
+              <pre><span class="hljs-keyword">var</span> a = <span class="hl-o">f()</span>;</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js right-half">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;
+  <span class="hl-o"><span class="hljs-keyword">return</span> i</span>;
+  i = i + <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">return</span> i;
+  i = i + <span class="hljs-number">2</span>;
+  <span class="hljs-keyword">return</span> i;
+}</pre>
+            </div>
+            <div class="highlight hljs lang-js small left-half">
+              <pre><span class="hljs-keyword">var</span> <span class="hl-o">a = f()</span>;</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js right-half">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;
+  <span class="hl-o"><span class="hljs-keyword">return</span> i</span>;
+  i = i + <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">return</span> i;
+  i = i + <span class="hljs-number">2</span>;
+  <span class="hljs-keyword">return</span> i;
+}</pre>
+            </div>
+            <div class="highlight hljs lang-js small left-half">
+              <pre><span class=""><span class="hljs-keyword">var</span> a = f()</span>; <span class="hljs-comment">// a == 0</span></pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js right-half">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">return</span> i;
+  <span class="hl-o">i = i + <span class="hljs-number">1</span></span>;
+  <span class="hljs-keyword">return</span> i;
+  i = i + <span class="hljs-number">2</span>;
+  <span class="hljs-keyword">return</span> i;
+}</pre>
+            </div>
+            <div class="highlight hljs lang-js small left-half">
+              <pre><span class=""><span class="hljs-keyword">var</span> a = f()</span>; <span class="hljs-comment">// a == 0</span>
+<span class="hljs-comment">
+// когда-нибудь позже
+</span>
+<span class="hljs-keyword">var</span> b = <span class="hl-o">f()</span>;</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js right-half">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">return</span> i;
+  i = i + <span class="hljs-number">1</span>; <span class="hljs-comment">// i == 1</span>
+  <span class="hl-o"><span class="hljs-keyword">return</span> i</span>;
+  i = i + <span class="hljs-number">2</span>;
+  <span class="hljs-keyword">return</span> i;
+}</pre>
+            </div>
+            <div class="highlight hljs lang-js small left-half">
+              <pre><span class=""><span class="hljs-keyword">var</span> a = f()</span>; <span class="hljs-comment">// a == 0</span>
+<span class="hljs-comment">
+// когда-нибудь позже
+</span>
+<span class="hljs-keyword">var</span> <span class="hl-o">b = f()</span>;</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js right-half">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">return</span> i;
+  i = i + <span class="hljs-number">1</span>; <span class="hljs-comment">// i == 1</span>
+  <span class="hl-o"><span class="hljs-keyword">return</span> i</span>;
+  i = i + <span class="hljs-number">2</span>;
+  <span class="hljs-keyword">return</span> i;
+}</pre>
+            </div>
+            <div class="highlight hljs lang-js small left-half">
+              <pre><span class=""><span class="hljs-keyword">var</span> a = f()</span>; <span class="hljs-comment">// a == 0</span>
+<span class="hljs-comment">
+// когда-нибудь позже
+</span>
+<span class="hljs-keyword">var</span> b = f(); <span class="hljs-comment">// b == 1</span></pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js right-half">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">return</span> i;
+  i = i + <span class="hljs-number">1</span>; <span class="hljs-comment">// i == 1</span>
+  <span class="hljs-keyword">return</span> i;
+  <span class="hl-o">i = i + <span class="hljs-number">2</span></span>;
+  <span class="hljs-keyword">return</span> i;
+}</pre>
+            </div>
+            <div class="highlight hljs lang-js small left-half">
+              <pre><span class=""><span class="hljs-keyword">var</span> a = f()</span>; <span class="hljs-comment">// a == 0</span>
+<span class="hljs-comment">
+// когда-нибудь позже
+</span>
+<span class="hljs-keyword">var</span> b = f(); <span class="hljs-comment">// b == 1</span>
+<span class="hljs-comment">
+// когда-нибудь позже
+</span>
+<span class="hljs-keyword">var</span> c = <span class="hl-o">f()</span>;</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js right-half">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">return</span> i;
+  i = i + <span class="hljs-number">1</span>; <span class="hljs-comment">// i == 1</span>
+  <span class="hljs-keyword">return</span> i;
+  i = i + <span class="hljs-number">2</span>; <span class="hljs-comment">// i == 3</span>
+  <span class="hl-o"><span class="hljs-keyword">return</span> i</span>;
+}</pre>
+            </div>
+            <div class="highlight hljs lang-js small left-half">
+              <pre><span class=""><span class="hljs-keyword">var</span> a = f()</span>; <span class="hljs-comment">// a == 0</span>
+<span class="hljs-comment">
+// когда-нибудь позже
+</span>
+<span class="hljs-keyword">var</span> b = f(); <span class="hljs-comment">// b == 1</span>
+<span class="hljs-comment">
+// когда-нибудь позже
+</span>
+<span class="hljs-keyword">var</span> <span class="hl-o">c = f()</span>;</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js right-half">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">return</span> i;
+  i = i + <span class="hljs-number">1</span>; <span class="hljs-comment">// i == 1</span>
+  <span class="hljs-keyword">return</span> i;
+  i = i + <span class="hljs-number">2</span>; <span class="hljs-comment">// i == 3</span>
+  <span class="hl-o"><span class="hljs-keyword">return</span> i</span>;
+}</pre>
+            </div>
+            <div class="highlight hljs lang-js small left-half">
+              <pre><span class=""><span class="hljs-keyword">var</span> a = f()</span>; <span class="hljs-comment">// a == 0</span>
+<span class="hljs-comment">
+// когда-нибудь позже
+</span>
+<span class="hljs-keyword">var</span> b = f(); <span class="hljs-comment">// b == 1</span>
+<span class="hljs-comment">
+// когда-нибудь позже
+</span>
+<span class="hljs-keyword">var</span> c = f(); <span class="hljs-comment">// c == 3</span></pre>
+            </div>
+          </div>
+        </section>
+        <section><img src="fish.png"></section>
+        <section>
+          <div class="highlight hljs lang-js center">
+            <pre><span class="hljs-keyword">var</span> iter = f();
+<span class="hljs-comment">
+// iter = {
+//   next: function() {...}
+// }</span></pre>
+          </div>
+        </section>
+        <section data-background="code-bcgr-three.png">
+          <div class="slide-code">
+            <div style="top: 40px;" class="highlight hljs lang-js tiny left-half">
+              <pre><span class="hljs-keyword">var</span> iter_cat = f(<span class="hljs-string">'Cat'</span>);
+<span class="hljs-keyword">var</span> iter_penguin = f(<span class="hljs-string">'Penguin'</span>);</pre>
+            </div>
+            <div style="padding-top: 40px;" class="highlight hljs lang-js ssmall right-half-top">
+              <pre><span class="hljs-comment">// Cat's call
+</span>
+<span class="hljs-function"><span class="hljs-keyword fade">function</span> <span class="hljs-title fade">f</span><span class="hljs-params">(str)</span> </span><span class="hl-o">{</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Hello, '</span> + str + <span class="hljs-string">'!'</span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Bye, '</span> + str + <span class="hljs-string">'!'</span>;
+}</pre>
+            </div>
+            <div style="padding-top: 40px;" class="highlight hljs lang-js ssmall right-half-btm">
+              <pre><span class="hljs-comment">// Penguin's call
+</span>
+<span class="hljs-function"><span class="hljs-keyword fade">function</span> <span class="hljs-title fade">f</span><span class="hljs-params">(str)</span> </span><span class="hl-g">{</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Hello, '</span> + str + <span class="hljs-string">'!'</span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Bye, '</span> + str + <span class="hljs-string">'!'</span>;
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-three.png">
+          <div class="slide-code">
+            <div style="top: 40px;" class="highlight hljs lang-js tiny left-half">
+              <pre><span class="hljs-keyword">var</span> iter_cat = f(<span class="hljs-string">'Cat'</span>);
+<span class="hljs-keyword">var</span> iter_penguin = f(<span class="hljs-string">'Penguin'</span>);
+<span></span>
+<span class="hljs-keyword">var</span> <span class="hl-o">a = iter_cat.next()</span>;
+<span class="hljs-comment">// 'Hello, Cat!'</span></pre>
+            </div>
+            <div style="padding-top: 40px;" class="highlight hljs lang-js ssmall right-half-top">
+              <pre><span class="hljs-comment">// Cat's call
+</span>
+<span class="hljs-function"><span class="hljs-keyword fade">function</span> <span class="hljs-title fade">f</span><span class="hljs-params">(str)</span> </span>{
+  <span class="hl-o"><span class="hljs-keyword">return</span> <span class="hljs-string">'Hello, '</span> + str + <span class="hljs-string">'!'</span></span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Bye, '</span> + str + <span class="hljs-string">'!'</span>;
+}</pre>
+            </div>
+            <div style="padding-top: 40px;" class="highlight hljs lang-js ssmall right-half-btm">
+              <pre><span class="hljs-comment">// Penguin's call
+</span>
+<span class="hljs-function"><span class="hljs-keyword fade">function</span> <span class="hljs-title fade">f</span><span class="hljs-params">(str)</span> </span><span class="hl-g">{</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Hello, '</span> + str + <span class="hljs-string">'!'</span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Bye, '</span> + str + <span class="hljs-string">'!'</span>;
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-three.png">
+          <div class="slide-code">
+            <div style="top: 40px;" class="highlight hljs lang-js tiny left-half">
+              <pre><span class="hljs-keyword">var</span> iter_cat = f(<span class="hljs-string">'Cat'</span>);
+<span class="hljs-keyword">var</span> iter_penguin = f(<span class="hljs-string">'Penguin'</span>);
+<span></span>
+<span class="hljs-keyword">var</span> a = iter_cat.next();
+<span class="hljs-comment">// 'Hello, Cat!'</span>
+<span></span>
+<span class="hljs-keyword">var</span> <span class="hl-g">b = iter_penguin.next()</span>;
+<span class="hljs-comment">// 'Hello, Penguin!'</span></pre>
+            </div>
+            <div style="padding-top: 40px;" class="highlight hljs lang-js ssmall right-half-top">
+              <pre><span class="hljs-comment">// Cat's call
+</span>
+<span class="hljs-function"><span class="hljs-keyword fade">function</span> <span class="hljs-title fade">f</span><span class="hljs-params">(str)</span> </span>{
+  <span class="hl-o"><span class="hljs-keyword">return</span> <span class="hljs-string">'Hello, '</span> + str + <span class="hljs-string">'!'</span></span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Bye, '</span> + str + <span class="hljs-string">'!'</span>;
+}</pre>
+            </div>
+            <div style="padding-top: 40px;" class="highlight hljs lang-js ssmall right-half-btm">
+              <pre><span class="hljs-comment">// Penguin's call
+</span>
+<span class="hljs-function"><span class="hljs-keyword fade">function</span> <span class="hljs-title fade">f</span><span class="hljs-params">(str)</span> </span>{
+  <span class="hl-g"><span class="hljs-keyword">return</span> <span class="hljs-string">'Hello, '</span> + str + <span class="hljs-string">'!'</span></span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Bye, '</span> + str + <span class="hljs-string">'!'</span>;
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-three.png">
+          <div class="slide-code">
+            <div style="top: 40px;" class="highlight hljs lang-js tiny left-half">
+              <pre><span class="hljs-keyword">var</span> iter_cat = f(<span class="hljs-string">'Cat'</span>);
+<span class="hljs-keyword">var</span> iter_penguin = f(<span class="hljs-string">'Penguin'</span>);
+<span></span>
+<span class="hljs-keyword">var</span> a = iter_cat.next();
+<span class="hljs-comment">// 'Hello, Cat!'</span>
+<span></span>
+<span class="hljs-keyword">var</span> b = iter_penguin.next();
+<span class="hljs-comment">// 'Hello, Penguin!'</span>
+<span></span>
+<span class="hljs-keyword">var</span> <span class="hl-o">c = iter_cat.next()</span>;
+<span class="hljs-comment">// 'Bye, Cat!'</span></pre>
+            </div>
+            <div style="padding-top: 40px;" class="highlight hljs lang-js ssmall right-half-top">
+              <pre><span class="hljs-comment">// Cat's call
+</span>
+<span class="hljs-function"><span class="hljs-keyword fade">function</span> <span class="hljs-title fade">f</span><span class="hljs-params">(str)</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Hello, '</span> + str + <span class="hljs-string">'!'</span>;
+  <span class="hl-o"><span class="hljs-keyword">return</span> <span class="hljs-string">'Bye, '</span> + str + <span class="hljs-string">'!'</span></span>;
+}</pre>
+            </div>
+            <div style="padding-top: 40px;" class="highlight hljs lang-js ssmall right-half-btm">
+              <pre><span class="hljs-comment">// Penguin's call
+</span>
+<span class="hljs-function"><span class="hljs-keyword fade">function</span> <span class="hljs-title fade">f</span><span class="hljs-params">(str)</span> </span>{
+  <span class="hl-g"><span class="hljs-keyword">return</span> <span class="hljs-string">'Hello, '</span> + str + <span class="hljs-string">'!'</span></span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Bye, '</span> + str + <span class="hljs-string">'!'</span>;
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-three.png">
+          <div class="slide-code">
+            <div style="top: 40px;" class="highlight hljs lang-js tiny left-half">
+              <pre><span class="hljs-keyword">var</span> iter_cat = f(<span class="hljs-string">'Cat'</span>);
+<span class="hljs-keyword">var</span> iter_penguin = f(<span class="hljs-string">'Penguin'</span>);
+<span></span>
+<span class="hljs-keyword">var</span> a = iter_cat.next();
+<span class="hljs-comment">// 'Hello, Cat!'</span>
+<span></span>
+<span class="hljs-keyword">var</span> b = iter_penguin.next();
+<span class="hljs-comment">// 'Hello, Penguin!'</span>
+<span></span>
+<span class="hljs-keyword">var</span> c = iter_cat.next();
+<span class="hljs-comment">// 'Bye, Cat!'</span>
+<span></span>
+<span class="hljs-keyword">var</span> <span class="hl-g">d = iter_penguin.next()</span>;
+<span class="hljs-comment">// 'Bye, Penguin!'</span></pre>
+            </div>
+            <div style="padding-top: 40px;" class="highlight hljs lang-js ssmall right-half-top">
+              <pre><span class="hljs-comment">// Cat's call
+</span>
+<span class="hljs-function"><span class="hljs-keyword fade">function</span> <span class="hljs-title fade">f</span><span class="hljs-params">(str)</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Hello, '</span> + str + <span class="hljs-string">'!'</span>;
+  <span class="hl-o"><span class="hljs-keyword">return</span> <span class="hljs-string">'Bye, '</span> + str + <span class="hljs-string">'!'</span></span>;
+}</pre>
+            </div>
+            <div style="padding-top: 40px;" class="highlight hljs lang-js ssmall right-half-btm">
+              <pre><span class="hljs-comment">// Penguin's call
+</span>
+<span class="hljs-function"><span class="hljs-keyword fade">function</span> <span class="hljs-title fade">f</span><span class="hljs-params">(str)</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Hello, '</span> + str + <span class="hljs-string">'!'</span>;
+  <span class="hl-g"><span class="hljs-keyword">return</span> <span class="hljs-string">'Bye, '</span> + str + <span class="hljs-string">'!'</span></span>;
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="#FFFE8C">
+          <h1>Profit!!!</h1>
+        </section>
+        <section>
+          <div style="background: url(&quot;code-bcgr-left.png&quot;)" class="slide-code">
+            <div class="highlight hljs lang-js left-big tiny">
+              <pre><span class="hljs-keyword">var</span> result_1 = iter.next();
+<span class="hljs-comment">// 42</span>
+<span></span>
+<span class="hljs-comment">// ???</span></pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div style="background: url(&quot;code-bcgr-left.png&quot;)" class="slide-code">
+            <div class="highlight hljs lang-js left-big tiny">
+              <pre><span class="hljs-keyword">var</span> result_1 = iter.next();
+<span class="hljs-comment">// { value: 42, <span class="">done: false</span> }</span>
+<span class="hljs-comment"></span>
+<span class="hljs-keyword">var</span> result_2 = iter.next();
+<span class="hljs-comment">// { value: 53, <span class="">done: true</span> }</span></pre>
+            </div>
+            <div style="padding-left: 20px;" class="highlight hljs lang-js right-small tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-number">42</span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-number">53</span>;
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h1>Not yet...</h1>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="width: 1000px; left: 400px; top: 170px;" class="highlight hljs lang-js small">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">(flag)</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">if</span> (flag) {
+    <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>;
+    <span class="hljs-comment">// kill me please</span>
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-number">3</span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-number">4</span>;
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="width: 1000px; left: 400px; top: 170px;" class="highlight hljs lang-js small">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">(flag)</span> </span>{
+  <span class="hljs-keyword hl-g">yield</span> <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">if</span> (flag) {
+    <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>;
+  }
+  <span class="hljs-keyword hl-g">yield</span> <span class="hljs-number">3</span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-number">4</span>;
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js left-half tiny">
+              <pre><span class="hljs-keyword">var</span> iter = f(<span class="hljs-literal">false</span>);
+<span></span>
+iter.next();
+<span class="hljs-comment">// { value: 1, done: false }</span>
+<span></span>
+iter.next();
+<span class="hljs-comment">// { value: 3, done: false }</span>
+<span></span>
+iter.next();
+<span class="hljs-comment">// { value: 4, done: true }</span></pre>
+            </div>
+            <div class="highlight hljs lang-js right-half small">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">(flag)</span> </span>{
+  <span class="hljs-keyword">yield</span> <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">if</span> (flag) {
+    <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>;
+  }
+  <span class="hljs-keyword">yield</span> <span class="hljs-number">3</span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-number">4</span>;
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js left-half tiny">
+              <pre><span class="hljs-keyword">var</span> iter = f(<span class="hljs-literal">true</span>);
+<span></span>
+iter.next();
+<span class="hljs-comment">// { value: 1, done: false }</span>
+<span></span>
+iter.next();
+<span class="hljs-comment">// { value: 2, done: true }</span></pre>
+            </div>
+            <div class="highlight hljs lang-js right-half small">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">(flag)</span> </span>{
+  <span class="hljs-keyword">yield</span> <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">if</span> (flag) {
+    <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>;
+  }
+  <span class="hljs-keyword">yield</span> <span class="hljs-number">3</span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-number">4</span>;
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h1>Almost there!</h1>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 370px; top: 170px; width: 1000px;" class="highlight hljs lang-js small">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+}
+<span></span>
+<span class="hljs-keyword">var</span> result = f(); <span class="hljs-comment">// 1</span></pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 370px; top: 170px; width: 1000px;" class="highlight hljs lang-js small">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+}
+<span></span>
+<span class="hljs-keyword">var</span> iter = f();
+<span class="hljs-keyword">var</span> result = iter.next().value;
+<span></span>
+<span class="hljs-comment">// или:</span>
+<span class="hljs-comment">// result = f().next().value;</span></pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 200px; top: 120px; width: 1200px;" class="highlight hljs lang-js ssmall">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">func</span><span class="hljs-params">()</span> </span>{ <span class="hljs-comment">// обычная функция</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+}
+<span class="hljs-keyword">var</span> result = func(); <span class="hljs-comment">// 1</span>
+ 
+ 
+ 
+<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hl-o">*</span> <span class="hljs-title">genFunc</span><span class="hljs-params">()</span> </span>{ <span class="hljs-comment">// функция-генератор</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+}
+<span class="hljs-keyword">var</span> iter = genFunc();
+<span class="hljs-keyword">var</span> result = iter.next(); <span class="hljs-comment">// { value: 1, done: true }</span></pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h1>Just one feature</h1>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js left-half tiny">
+              <pre><span class="hljs-keyword">var</span> iter = strConcat(<span class="hljs-string">'a'</span>),
+    state;</pre>
+            </div>
+            <div class="highlight hljs lang-js right-half tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strConcat</span><span class="hljs-params">(initialStr)</span> </span><span class="hl-o">{</span>
+  <span class="hljs-keyword">var</span> str = initialStr;
+  <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">var</span> part = <span class="hljs-keyword">yield</span> str;
+    str = str + <span class="hljs-string">'-'</span> + part;
+  }
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js left-half tiny">
+              <pre><span class="hljs-keyword">var</span> iter = strConcat(<span class="hljs-string">'a'</span>),
+    state;
+ 
+state = <span class="hl-o">iter.next()</span>;</pre>
+            </div>
+            <div class="highlight hljs lang-js right-half tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strConcat</span><span class="hljs-params">(initialStr)</span> </span>{
+  <span class="hl-o"><span class="hljs-keyword">var</span> str = initialStr</span>;
+  <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">var</span> part = <span class="hljs-keyword">yield</span> str;
+    str = str + <span class="hljs-string">'-'</span> + part;
+  }
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js left-half tiny">
+              <pre><span class="hljs-keyword">var</span> iter = strConcat(<span class="hljs-string">'a'</span>),
+    state;
+ 
+<span class="hl-o">state = iter.next()</span>;</pre>
+            </div>
+            <div class="highlight hljs lang-js right-half tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strConcat</span><span class="hljs-params">(initialStr)</span> </span>{
+  <span class="hljs-keyword">var</span> str = initialStr; <span class="hljs-comment">// 'a'</span>
+  <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">var</span> part = <span class="hl-o"><span class="hljs-keyword">yield</span> str</span>;
+    str = str + <span class="hljs-string">'-'</span> + part;
+  }
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js left-half tiny">
+              <pre><span class="hljs-keyword">var</span> iter = strConcat(<span class="hljs-string">'a'</span>),
+    state;
+ 
+state = iter.next();
+<span class="hljs-comment">// { value: 'a', done: false }</span></pre>
+            </div>
+            <div class="highlight hljs lang-js right-half tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strConcat</span><span class="hljs-params">(initialStr)</span> </span>{
+  <span class="hljs-keyword">var</span> str = initialStr; <span class="hljs-comment">// 'a'</span>
+  <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">var</span> part = <span class="hl-o"><span class="hljs-keyword">yield</span> str</span>;
+    str = str + <span class="hljs-string">'-'</span> + part;
+  }
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js left-half tiny">
+              <pre><span class="hljs-keyword">var</span> iter = strConcat(<span class="hljs-string">'a'</span>),
+    state;
+ 
+state = iter.next();
+<span class="hljs-comment">// { value: 'a', done: false }</span>
+ 
+state = <span class="hl-o">iter.next(<span class="hljs-string">'b'</span>)</span>;</pre>
+            </div>
+            <div class="highlight hljs lang-js right-half tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strConcat</span><span class="hljs-params">(initialStr)</span> </span>{
+  <span class="hljs-keyword">var</span> str = initialStr; <span class="hljs-comment">// 'a'</span>
+  <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">var</span> <span class="hl-o">part = <span class="hljs-keyword">yield</span> str</span>; <span class="hljs-comment">// <span class="hl-g">'b'</span></span>
+    str = str + <span class="hljs-string">'-'</span> + part;
+  }
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js left-half tiny">
+              <pre><span class="hljs-keyword">var</span> iter = strConcat(<span class="hljs-string">'a'</span>),
+    state;
+ 
+state = iter.next();
+<span class="hljs-comment">// { value: 'a', done: false }</span>
+ 
+state = <span class="hl-o">iter.next(<span class="hljs-string">'b'</span>)</span>;</pre>
+            </div>
+            <div class="highlight hljs lang-js right-half tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strConcat</span><span class="hljs-params">(initialStr)</span> </span>{
+  <span class="hljs-keyword">var</span> str = initialStr; <span class="hljs-comment">// 'a'</span>
+  <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">var</span> part = <span class="hljs-keyword">yield</span> str; <span class="hljs-comment">// 'b'</span>
+    <span class="hl-o">str = str + <span class="hljs-string">'-'</span> + part</span>;
+  }
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js left-half tiny">
+              <pre><span class="hljs-keyword">var</span> iter = strConcat(<span class="hljs-string">'a'</span>),
+    state;
+ 
+state = iter.next();
+<span class="hljs-comment">// { value: 'a', done: false }</span>
+ 
+<span class="hl-o">state = iter.next(<span class="hljs-string">'b'</span>)</span>;</pre>
+            </div>
+            <div class="highlight hljs lang-js right-half tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strConcat</span><span class="hljs-params">(initialStr)</span> </span>{
+  <span class="hljs-keyword">var</span> str = initialStr; <span class="hljs-comment">// 'a'</span>
+  <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">var</span> part = <span class="hl-o"><span class="hljs-keyword">yield</span> str</span>; <span class="hljs-comment">// 'b'</span>
+    str = str + <span class="hljs-string">'-'</span> + part; <span class="hljs-comment">// 'a-b'</span>
+  }
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js left-half tiny">
+              <pre><span class="hljs-keyword">var</span> iter = strConcat(<span class="hljs-string">'a'</span>),
+    state;
+ 
+state = iter.next();
+<span class="hljs-comment">// { value: 'a', done: false }</span>
+ 
+state = iter.next(<span class="hljs-string">'b'</span>);
+<span class="hljs-comment">// { value: 'a-b', done: false }</span></pre>
+            </div>
+            <div class="highlight hljs lang-js right-half tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strConcat</span><span class="hljs-params">(initialStr)</span> </span>{
+  <span class="hljs-keyword">var</span> str = initialStr; <span class="hljs-comment">// 'a'</span>
+  <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">var</span> part = <span class="hl-o"><span class="hljs-keyword">yield</span> str</span>; <span class="hljs-comment">// 'b'</span>
+    str = str + <span class="hljs-string">'-'</span> + part; <span class="hljs-comment">// 'a-b'</span>
+  }
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js left-half tiny">
+              <pre><span class="hljs-keyword">var</span> iter = strConcat(<span class="hljs-string">'a'</span>),
+    state;
+ 
+state = iter.next();
+<span class="hljs-comment">// { value: 'a', done: false }</span>
+ 
+state = iter.next(<span class="hljs-string">'b'</span>);
+<span class="hljs-comment">// { value: 'a-b', done: false }</span>
+ 
+state = <span class="hl-o">iter.next(<span class="hljs-string">'c'</span>)</span>;</pre>
+            </div>
+            <div class="highlight hljs lang-js right-half tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strConcat</span><span class="hljs-params">(initialStr)</span> </span>{
+  <span class="hljs-keyword">var</span> str = initialStr; <span class="hljs-comment">// 'a'</span>
+  <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">var</span> <span class="hl-o">part = <span class="hljs-keyword">yield</span> str</span>; <span class="hljs-comment">// <span class="hl-g">'c'</span></span>
+    str = str + <span class="hljs-string">'-'</span> + part; <span class="hljs-comment">// 'a-b'</span>
+  }
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js left-half tiny">
+              <pre><span class="hljs-keyword">var</span> iter = strConcat(<span class="hljs-string">'a'</span>),
+    state;
+ 
+state = iter.next();
+<span class="hljs-comment">// { value: 'a', done: false }</span>
+ 
+state = iter.next(<span class="hljs-string">'b'</span>);
+<span class="hljs-comment">// { value: 'a-b', done: false }</span>
+ 
+state = <span class="hl-o">iter.next(<span class="hljs-string">'c'</span>)</span>;</pre>
+            </div>
+            <div class="highlight hljs lang-js right-half tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strConcat</span><span class="hljs-params">(initialStr)</span> </span>{
+  <span class="hljs-keyword">var</span> str = initialStr; <span class="hljs-comment">// 'a'</span>
+  <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">var</span> part = <span class="hljs-keyword">yield</span> str; <span class="hljs-comment">// 'c'</span>
+    <span class="hl-o">str = str + <span class="hljs-string">'-'</span> + part;</span> <span class="hljs-comment">// 'a-b'</span>
+  }
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js left-half tiny">
+              <pre><span class="hljs-keyword">var</span> iter = strConcat(<span class="hljs-string">'a'</span>),
+    state;
+ 
+state = iter.next();
+<span class="hljs-comment">// { value: 'a', done: false }</span>
+ 
+state = iter.next(<span class="hljs-string">'b'</span>);
+<span class="hljs-comment">// { value: 'a-b', done: false }</span>
+ 
+<span class="hl-o">state = iter.next(<span class="hljs-string">'c'</span>)</span>;</pre>
+            </div>
+            <div class="highlight hljs lang-js right-half tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strConcat</span><span class="hljs-params">(initialStr)</span> </span>{
+  <span class="hljs-keyword">var</span> str = initialStr; <span class="hljs-comment">// 'a'</span>
+  <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">var</span> part = <span class="hl-o"><span class="hljs-keyword">yield</span> str</span>; <span class="hljs-comment">// 'c'</span>
+    str = str + <span class="hljs-string">'-'</span> + part; <span class="hljs-comment">// 'a-b-c'</span>
+  }
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="code-bcgr-half.png">
+          <div class="slide-code">
+            <div class="highlight hljs lang-js left-half tiny">
+              <pre><span class="hljs-keyword">var</span> iter = strConcat(<span class="hljs-string">'a'</span>),
+    state;
+ 
+state = iter.next();
+<span class="hljs-comment">// { value: 'a', done: false }</span>
+ 
+state = iter.next(<span class="hljs-string">'b'</span>);
+<span class="hljs-comment">// { value: 'a-b', done: false }</span>
+ 
+state = iter.next(<span class="hljs-string">'c'</span>);
+<span class="hljs-comment">// { value: 'a-b-c', done: false }</span>
+ 
+ 
+<span class="hljs-comment">// и так далее</span></pre>
+            </div>
+            <div class="highlight hljs lang-js right-half tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strConcat</span><span class="hljs-params">(initialStr)</span> </span>{
+  <span class="hljs-keyword">var</span> str = initialStr; <span class="hljs-comment">// 'a'</span>
+  <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">var</span> part = <span class="hl-o"><span class="hljs-keyword">yield</span> str</span>; <span class="hljs-comment">// 'c'</span>
+    str = str + <span class="hljs-string">'-'</span> + part; <span class="hljs-comment">// 'a-b-c'</span>
+  }
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">genFunc</span><span class="hljs-params">(a, b)</span> </span>{
+  <span class="hljs-comment">// произвести значение и поставить на паузу</span>
+  <span class="hljs-keyword">var</span> c = <span class="hljs-keyword">yield</span> a;
+  <span class="hljs-comment">// произвести значение и завершить</span>
+  <span class="hljs-keyword">return</span> b + с;
+}
+ 
+<span class="hljs-comment">// вызов функции генератора даёт итератор</span>
+<span class="hljs-keyword">var</span> iter = genFunc(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+ 
+<span class="hljs-comment">// первый вызов next: выполнить до первого yield</span>
+<span class="hljs-comment">// или return и получить произведённое значение</span>
+<span class="hljs-keyword">var</span> state = iter.next();
+ 
+<span class="hljs-comment">// последующие вызовы next: вернуть из предыдущего</span>
+<span class="hljs-comment">// yield значение, выполнить до следующего yield</span>
+<span class="hljs-comment">// или return, и получить произведённое значение</span>
+state = iter.next(<span class="hljs-number">3</span>);</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h1>Async patterns</h1>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 130px; width: 1500px;" class="highlight hljs lang-js ssmall">
+              <pre><span class="hljs-keyword">var</span> addFavorite = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(userId, videoId, cb)</span>
+</span>{
+  db.getUser(userId, <span class="hljs-function"><span class="hljs-params">(err, user)</span> <span class="hljs-arrow">=&gt;</span> </span>{
+    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> cb(err);
+    user.favorites.push(videoId);
+    db.saveUser(user, <span class="hljs-function"><span class="hljs-params">err</span> <span class="hljs-arrow">=&gt;</span> </span>{
+      <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> cb(err);
+      cb(<span class="hljs-literal">null</span>, user.favorites);
+    });
+  });
+};</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 130px; width: 1500px;" class="highlight hljs lang-js ssmall">
+              <pre><span class="hljs-keyword">var</span> addFavorite = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(userId, videoId<span class="fade">, cb</span>)</span>
+</span>{
+  db.getUser(userId<span class="fade">, <span class="hljs-function"><span class="hljs-params">(err, user)</span> <span class="hljs-arrow">=&gt;</span> </span>{
+    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> cb(err);</span>
+    user.favorites.push(videoId);
+    db.saveUser(user<span class="fade">, <span class="hljs-function"><span class="hljs-params">err</span> <span class="hljs-arrow">=&gt;</span> </span>{
+      <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> cb(err);</span>
+      cb(<span class="fade"><span class="hljs-literal">null</span>, </span>user.favorites);
+    <span class="fade">});
+  });</span>
+};</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 130px; width: 1500px;" class="highlight hljs lang-js ssmall">
+              <pre><span class="hljs-keyword">var</span> addFavorite = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(userId, videoId)</span>
+</span>{
+  <span class="hljs-keyword">return</span> db.getUser(userId)
+    .then(user <span class="hljs-arrow">=&gt;</span> {
+      user.favorites.push(videoId);
+      <span class="hljs-keyword">return</span> db.saveUser(user)
+        .then(() <span class="hljs-arrow">=&gt;</span> user.favorites);
+    });
+};</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 130px; width: 1500px;" class="highlight hljs lang-js ssmall">
+              <pre><span class="hljs-keyword">var</span> addFavorite = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(userId, videoId)</span>
+</span>{
+  <span class="hljs-keyword">var</span> user = db.getUser(userId); <span class="hljs-comment">// magic here</span>
+  user.favorites.push(videoId);
+  db.saveUser(user); <span class="hljs-comment">// magic here</span>
+  <span class="hljs-keyword">return</span> user.favorites;
+};</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 130px; width: 1500px;" class="highlight hljs lang-js ssmall">
+              <pre><span class="hljs-keyword">var</span> addFavorite = <span class="hl-g">wrap(</span><span class="hljs-function"><span class="hljs-keyword">function<span class="hl-g">*</span></span><span class="hljs-params">(userId, videoId)</span>
+</span>{
+  <span class="hljs-keyword">var</span> user = <span class="hljs-keyword hl-g">yield</span> db.getUser(userId);
+  user.favorites.push(videoId);
+  <span class="hljs-keyword hl-g">yield</span> db.saveUser(user);
+  <span class="hljs-keyword">return</span> user.favorites;
+}<span class="hl-g">)</span>;</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> addFavoriteGen = <span class="hljs-function"><span class="hljs-keyword">function*</span><span class="hljs-params">(userId, videoId)</span> </span><span class="hl-o">{</span>
+  <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">yield</span> db.getUser(userId);
+  user.favorites.push(videoId);
+  <span class="hljs-keyword">yield</span> db.saveUser(user);
+  <span class="hljs-keyword">return</span> user.favorites;
+};
+ 
+ 
+<span class="hljs-keyword">var</span> <span class="hl-o">iter = addFavoriteGen(<span class="hljs-string">'vasya'</span>, <span class="hljs-string">'about_beavers'</span>)</span>;</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> addFavoriteGen = <span class="hljs-function"><span class="hljs-keyword">function*</span><span class="hljs-params">(userId, videoId)</span> </span>{
+  <span class="hljs-keyword">var</span> user = <span class="hl-o"><span class="hljs-keyword">yield</span> db.getUser(userId)</span>;
+  user.favorites.push(videoId);
+  <span class="hljs-keyword">yield</span> db.saveUser(user);
+  <span class="hljs-keyword">return</span> user.favorites;
+};
+ 
+ 
+<span class="hljs-keyword">var</span> iter = addFavoriteGen(<span class="hljs-string">'vasya'</span>, <span class="hljs-string">'about_beavers'</span>);
+<span class="hljs-keyword">var</span> <span class="hl-o">userPromise = iter.next().value</span>;</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> addFavoriteGen = <span class="hljs-function"><span class="hljs-keyword">function*</span><span class="hljs-params">(userId, videoId)</span> </span>{
+  <span class="hljs-keyword">var</span> user = <span class="hl-o"><span class="hljs-keyword">yield</span> db.getUser(userId)</span>;
+  user.favorites.push(videoId);
+  <span class="hljs-keyword">yield</span> db.saveUser(user);
+  <span class="hljs-keyword">return</span> user.favorites;
+};
+ 
+ 
+<span class="hljs-keyword">var</span> iter = addFavoriteGen(<span class="hljs-string">'vasya'</span>, <span class="hljs-string">'about_beavers'</span>);
+<span class="hljs-keyword">var</span> userPromise = iter.next().value;
+ 
+<span class="hljs-comment">// дождаться, пока userPromise разрешится в user</span></pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> addFavoriteGen = <span class="hljs-function"><span class="hljs-keyword">function*</span><span class="hljs-params">(userId, videoId)</span> </span>{
+  <span class="hljs-keyword">var</span> <span class="hl-o">user = <span class="hljs-keyword">yield</span> db.getUser(userId)</span>;
+  user.favorites.push(videoId);
+  <span class="hljs-keyword">yield</span> db.saveUser(user);
+  <span class="hljs-keyword">return</span> user.favorites;
+};
+ 
+ 
+<span class="hljs-keyword">var</span> iter = addFavoriteGen(<span class="hljs-string">'vasya'</span>, <span class="hljs-string">'about_beavers'</span>);
+<span class="hljs-keyword">var</span> userPromise = iter.next().value;
+ 
+<span class="hljs-comment">// дождаться, пока userPromise разрешится в user</span>
+<span class="hljs-keyword">var</span> userSavedPromise = <span class="hl-o">iter.next(user).value</span>;</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> addFavoriteGen = <span class="hljs-function"><span class="hljs-keyword">function*</span><span class="hljs-params">(userId, videoId)</span> </span>{
+  <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">yield</span> db.getUser(userId);
+  <span class="hl-o">user.favorites.push(videoId)</span>;
+  <span class="hljs-keyword">yield</span> db.saveUser(user);
+  <span class="hljs-keyword">return</span> user.favorites;
+};
+ 
+ 
+<span class="hljs-keyword">var</span> iter = addFavoriteGen(<span class="hljs-string">'vasya'</span>, <span class="hljs-string">'about_beavers'</span>);
+<span class="hljs-keyword">var</span> userPromise = iter.next().value;
+ 
+<span class="hljs-comment">// дождаться, пока userPromise разрешится в user</span>
+<span class="hljs-keyword">var</span> userSavedPromise = <span class="hl-o">iter.next(user).value</span>;</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> addFavoriteGen = <span class="hljs-function"><span class="hljs-keyword">function*</span><span class="hljs-params">(userId, videoId)</span> </span>{
+  <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">yield</span> db.getUser(userId);
+  user.favorites.push(videoId);
+  <span class="hl-o"><span class="hljs-keyword">yield</span> db.saveUser(user)</span>;
+  <span class="hljs-keyword">return</span> user.favorites;
+};
+ 
+ 
+<span class="hljs-keyword">var</span> iter = addFavoriteGen(<span class="hljs-string">'vasya'</span>, <span class="hljs-string">'about_beavers'</span>);
+<span class="hljs-keyword">var</span> userPromise = iter.next().value;
+ 
+<span class="hljs-comment">// дождаться, пока userPromise разрешится в user</span>
+<span class="hljs-keyword">var</span> <span class="hl-o">userSavedPromise = iter.next(user).value</span>;</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> addFavoriteGen = <span class="hljs-function"><span class="hljs-keyword">function*</span><span class="hljs-params">(userId, videoId)</span> </span>{
+  <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">yield</span> db.getUser(userId);
+  user.favorites.push(videoId);
+  <span class="hl-o"><span class="hljs-keyword">yield</span> db.saveUser(user)</span>;
+  <span class="hljs-keyword">return</span> user.favorites;
+};
+ 
+ 
+<span class="hljs-keyword">var</span> iter = addFavoriteGen(<span class="hljs-string">'vasya'</span>, <span class="hljs-string">'about_beavers'</span>);
+<span class="hljs-keyword">var</span> userPromise = iter.next().value;
+ 
+<span class="hljs-comment">// дождаться, пока userPromise разрешится в user</span>
+<span class="hljs-keyword">var</span> userSavedPromise = iter.next(user).value;
+ 
+<span class="hljs-comment">// дождаться, пока userSavedPromise разрешится</span></pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> addFavoriteGen = <span class="hljs-function"><span class="hljs-keyword">function*</span><span class="hljs-params">(userId, videoId)</span> </span>{
+  <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">yield</span> db.getUser(userId);
+  user.favorites.push(videoId);
+  <span class="hljs-keyword">yield</span> db.saveUser(user);
+  <span class="hl-o"><span class="hljs-keyword">return</span> user.favorites</span>;
+};
+ 
+ 
+<span class="hljs-keyword">var</span> iter = addFavoriteGen(<span class="hljs-string">'vasya'</span>, <span class="hljs-string">'about_beavers'</span>);
+<span class="hljs-keyword">var</span> userPromise = iter.next().value;
+ 
+<span class="hljs-comment">// дождаться, пока userPromise разрешится в user</span>
+<span class="hljs-keyword">var</span> userSavedPromise = iter.next(user).value;
+ 
+<span class="hljs-comment">// дождаться, пока userSavedPromise разрешится</span>
+<span class="hljs-keyword">var</span> newFavorites = <span class="hl-o">iter.next().value</span>;</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> addFavoriteGen = <span class="hljs-function"><span class="hljs-keyword">function*</span><span class="hljs-params">(userId, videoId)</span> </span>{
+  <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">yield</span> db.getUser(userId);
+  user.favorites.push(videoId);
+  <span class="hljs-keyword">yield</span> db.saveUser(user);
+  <span class="hl-o"><span class="hljs-keyword">return</span> user.favorites</span>;
+};
+ 
+ 
+<span class="hljs-keyword">var</span> iter = addFavoriteGen(<span class="hljs-string">'vasya'</span>, <span class="hljs-string">'about_beavers'</span>);
+<span class="hljs-keyword">var</span> userPromise = iter.next().value;
+ 
+<span class="hljs-comment">// дождаться, пока userPromise разрешится в user</span>
+<span class="hljs-keyword">var</span> userSavedPromise = iter.next(user).value;
+ 
+<span class="hljs-comment">// дождаться, пока userSavedPromise разрешится</span>
+<span class="hljs-keyword">var</span> <span class="hl-o">newFavorites = iter.next().value</span>;</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> addFavoriteGen = <span class="hljs-function"><span class="hljs-keyword">function*</span><span class="hljs-params">(userId, videoId)</span> </span>{
+  <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">yield</span> db.getUser(userId);
+  user.favorites.push(videoId);
+  <span class="hljs-keyword">yield</span> db.saveUser(user);
+  <span class="hl-o"><span class="hljs-keyword">return</span> user.favorites</span>;
+};
+ 
+ 
+<span class="hljs-keyword">var</span> iter = addFavoriteGen(<span class="hljs-string">'vasya'</span>, <span class="hljs-string">'about_beavers'</span>);
+<span class="hljs-keyword">var</span> userPromise = iter.next().value;
+ 
+<span class="hljs-comment">// дождаться, пока userPromise разрешится в user</span>
+<span class="hljs-keyword">var</span> userSavedPromise = iter.next(user).value;
+ 
+<span class="hljs-comment">// дождаться, пока userSavedPromise разрешится</span>
+<span class="hljs-keyword">var</span> newFavorites = iter.next().value;
+ 
+<span class="hljs-comment">// готово!</span></pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">wrap</span><span class="hljs-params">(genFunc)</span>
+</span>{
+  <span class="hljs-keyword">return</span> (...args) =&gt; <span class="hljs-keyword">new</span> Promise((resolve, reject) =&gt;
+  {
+    <span class="hljs-keyword">var</span> iter = genFunc(...args);
+    next(<span class="hljs-literal">undefined</span>);
+ 
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">next</span><span class="hljs-params">(value)</span> </span>{
+      <span class="hljs-keyword">var</span> state = iter.next(value);
+      <span class="hljs-keyword">if</span> (state.done) {
+        <span class="hljs-keyword">return</span> resolve(state.value);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">var</span> promise = state.value;
+        promise.then(next);
+      }
+    }
+  });
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 170px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="fade"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">wrap</span><span class="hljs-params">(genFunc)</span>
+</span>{
+  <span class="hljs-keyword">return</span> (...args) =&gt; <span class="hljs-keyword">new</span> Promise((resolve, reject) =&gt;
+  {
+    <span class="hljs-keyword">var</span> iter = genFunc(...args);
+    next(<span class="hljs-literal">undefined</span>);
+    </span>
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">next</span><span class="hljs-params">(value)</span> </span>{
+      <span class="hljs-keyword">var</span> state = iter.next(value);
+      <span class="hljs-keyword">if</span> (state.done) {
+        <span class="hljs-keyword">return</span> resolve(state.value);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">var</span> promise = state.value;
+        promise.then(next);
+      }
+    }
+  <span class="fade">});
+}</span></pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2>co</h2>
+          <h2>Bluebird.coroutine</h2>
+          <h2>spawn</h2>
+          <h2>...</h2>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 30px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> updateDataAndGetUserName = co(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(url)</span> </span>{
+  <span class="hljs-keyword">var</span> text = <span class="hljs-keyword">yield</span> getUrl(url);
+  <span class="hljs-keyword">var</span> data = <span class="hljs-keyword">yield</span> <span class="hljs-built_in">JSON</span>.parse(text);
+  <span class="hljs-keyword">yield</span> db.put(<span class="hljs-string">'lastData'</span>, data);
+  <span class="hljs-keyword">return</span> data.user.name;
+});
+ 
+updateDataAndGetUserName(url)
+  .then(userName =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'data updated, username:'</span>, userName);
+  });</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 30px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> updateDataAndGetUserName = co(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(url)</span> </span>{
+  <span class="hljs-keyword">var</span> data = <span class="hljs-keyword">yield</span> getData(url);
+  <span class="hljs-keyword">yield</span> db.put(<span class="hljs-string">'lastData'</span>, data);
+  <span class="hljs-keyword">return</span> data.user.name;
+});
+ 
+<span class="hljs-keyword">var</span> getData = co(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(url)</span> </span>{
+  <span class="hljs-keyword">var</span> text = <span class="hljs-keyword">yield</span> getUrl(url);
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">JSON</span>.parse(text);
+});
+ 
+updateDataAndGetUserName(url)
+  .then(userName =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'data updated, username:'</span>, userName);
+  });</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 30px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> updateDataAndGetUserName = co(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(url)</span> </span>{
+  <span class="hljs-keyword">var</span> data = <span class="hljs-keyword">yield</span> getData(url);
+  <span class="hljs-keyword">yield</span> db.put(<span class="hljs-string">'lastData'</span>, data); <span class="hljs-comment">// промис может пофейлиться</span>
+  <span class="hljs-keyword">return</span> data.user.name;          <span class="hljs-comment">// data.user может быть undefined</span>
+});
+ 
+<span class="hljs-keyword">var</span> getData = co(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(url)</span> </span>{
+  <span class="hljs-keyword">var</span> text = <span class="hljs-keyword">yield</span> getUrl(url); <span class="hljs-comment">// промис может пофейлиться</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">JSON</span>.parse(text);      <span class="hljs-comment">// может выбросить exception</span>
+});
+ 
+updateDataAndGetUserName(url)
+  .then(userName =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'data updated, username:'</span>, userName);
+  })<span class="fragment fade-out" data-fragment-index="1">;</span>
+  <span class="fragment fade-in" data-fragment-index="1">.catch(err =&gt; {
+    <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'error updating data: '</span> + err);
+  });</span></pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 30px; top: 40px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> updateDataAndGetUserName = co(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(url)</span> </span>{
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">var</span> data = <span class="hljs-keyword">yield</span> getData(url);
+    <span class="hljs-keyword">yield</span> db.put(<span class="hljs-string">'lastData'</span>, data); <span class="hljs-comment">// промис может пофейлиться</span>
+    <span class="hljs-keyword">return</span> data.user.name;          <span class="hljs-comment">// data.user может быть undefined</span>
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">yield</span> db.get(<span class="hljs-string">'lastData'</span>);
+  }
+});
+ 
+<span class="hljs-keyword">var</span> getData = co(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(url)</span> </span>{
+  <span class="hljs-keyword">var</span> text = <span class="hljs-keyword">yield</span> getUrl(url); <span class="hljs-comment">// промис может пофейлиться</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">JSON</span>.parse(text);      <span class="hljs-comment">// может выбросить exception</span>
+});
+ 
+updateDataAndGetUserName(url).then(userName =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'new username:'</span>, userName);
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2>iter.throw(error)</h2>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 200px; top: 230px; width: 1500px;" class="highlight hljs lang-js small">
+              <pre><span class="hljs-keyword">var</span> loadDataForId = co(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(id)</span> </span>{
+  <span class="hljs-keyword">var</span> <span class="hljs-literal">[</span>messages, status<span class="hljs-literal">]</span> = <span class="hljs-keyword">yield</span> <span class="hljs-literal">[</span>
+    getUrl(MESSAGES_BASE_URL + id),
+    getUrl(STATUS_BASE_URL + id)
+  <span class="hljs-literal">]</span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">{</span>messages, status<span class="hljs-literal">}</span>;
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h1>Express.js</h1>
+        </section>
+        <section>
+          <h1>Koa</h1>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 100px; top: 70px; width: 1500px;" class="highlight hljs lang-js ttiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'new request:'</span>, request.url);
+  next();
+});
+ 
+app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  db.User.get(req.userId, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, user)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">500</span>; <span class="hljs-comment">// internal server error</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) {
+      response.status = <span class="hljs-number">403</span>; <span class="hljs-comment">// unauthorized</span>
+    } <span class="hljs-keyword">else</span> {
+      request.user = user;
+      next();
+    }
+  });
+});
+ 
+app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response)</span> </span>{
+  response.body = <span class="hljs-string">'Hello, '</span> + request.user.name + <span class="hljs-string">'!'</span>;
+});
+ 
+app.get(<span class="hljs-string">'/status'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response)</span> </span>{
+  response.body = request.user.status;
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 100px; top: 70px; width: 1500px;" class="highlight hljs lang-js ttiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hl-o"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'new request:'</span>, request.url)</span>;
+  next();
+});
+ 
+app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  db.User.get(req.userId, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, user)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">500</span>; <span class="hljs-comment">// internal server error</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) {
+      response.status = <span class="hljs-number">403</span>; <span class="hljs-comment">// unauthorized</span>
+    } <span class="hljs-keyword">else</span> {
+      request.user = user;
+      next();
+    }
+  });
+});
+ 
+app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response)</span> </span>{
+  response.body = <span class="hljs-string">'Hello, '</span> + request.user.name + <span class="hljs-string">'!'</span>;
+});
+ 
+app.get(<span class="hljs-string">'/status'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response)</span> </span>{
+  response.body = request.user.status;
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 100px; top: 70px; width: 1500px;" class="highlight hljs lang-js ttiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'new request:'</span>, request.url);
+  <span class="hl-o">next()</span>;
+});
+ 
+app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hl-o">db.User.get(req.userId</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, user)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">500</span>; <span class="hljs-comment">// internal server error</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) {
+      response.status = <span class="hljs-number">403</span>; <span class="hljs-comment">// unauthorized</span>
+    } <span class="hljs-keyword">else</span> {
+      request.user = user;
+      next();
+    }
+  });
+});
+ 
+app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response)</span> </span>{
+  response.body = <span class="hljs-string">'Hello, '</span> + request.user.name + <span class="hljs-string">'!'</span>;
+});
+ 
+app.get(<span class="hljs-string">'/status'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response)</span> </span>{
+  response.body = request.user.status;
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 100px; top: 70px; width: 1500px;" class="highlight hljs lang-js ttiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'new request:'</span>, request.url);
+  next();
+});
+ 
+app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  db.User.get(req.userId, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, user)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">500</span>; <span class="hljs-comment">// internal server error</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) {
+      response.status = <span class="hljs-number">403</span>; <span class="hljs-comment">// unauthorized</span>
+    } <span class="hljs-keyword">else</span> {
+      request.user = user;
+      next();
+    }
+  });
+});
+ 
+app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response)</span> </span>{
+  response.body = <span class="hljs-string">'Hello, '</span> + request.user.name + <span class="hljs-string">'!'</span>;
+});
+ 
+app.get(<span class="hljs-string">'/status'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response)</span> </span>{
+  response.body = request.user.status;
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 100px; top: 70px; width: 1500px;" class="highlight hljs lang-js ttiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'new request:'</span>, request.url);
+  next();
+});
+ 
+app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  db.User.get(req.userId, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, user)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">500</span>; <span class="hljs-comment">// internal server error</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) {
+      response.status = <span class="hljs-number">403</span>; <span class="hljs-comment">// unauthorized</span>
+    } <span class="hljs-keyword">else</span> {
+      <span class="hl-o">request.user = user</span>;
+      next();
+    }
+  });
+});
+ 
+app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response)</span> </span>{
+  response.body = <span class="hljs-string">'Hello, '</span> + request.user.name + <span class="hljs-string">'!'</span>;
+});
+ 
+app.get(<span class="hljs-string">'/status'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response)</span> </span>{
+  response.body = request.user.status;
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 100px; top: 70px; width: 1500px;" class="highlight hljs lang-js ttiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'new request:'</span>, request.url);
+  next();
+});
+ 
+app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  db.User.get(req.userId, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, user)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">500</span>; <span class="hljs-comment">// internal server error</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) {
+      response.status = <span class="hljs-number">403</span>; <span class="hljs-comment">// unauthorized</span>
+    } <span class="hljs-keyword">else</span> {
+      request.user = user;
+      <span class="hl-o">next()</span>;
+    }
+  });
+});
+ 
+app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response)</span> </span>{
+  <span class="hl-o">response.body = <span class="hljs-string">'Hello, '</span> + request.user.name + <span class="hljs-string">'!'</span></span>;
+});
+ 
+app.get(<span class="hljs-string">'/status'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response)</span> </span>{
+  response.body = request.user.status;
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 100px; top: 70px; width: 1500px;" class="highlight hljs lang-js ttiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'new request:'</span>, request.url);
+  next();
+});
+ 
+app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  db.User.get(req.userId, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, user)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">500</span>; <span class="hljs-comment">// internal server error</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) {
+      response.status = <span class="hljs-number">403</span>; <span class="hljs-comment">// unauthorized</span>
+    } <span class="hljs-keyword">else</span> {
+      request.user = user;
+      next();
+    }
+  });
+});
+ 
+app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response)</span> </span>{
+  response.body = <span class="hljs-string">'Hello, '</span> + request.user.name + <span class="hljs-string">'!'</span>;
+});
+ 
+app.get(<span class="hljs-string">'/status'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response)</span> </span>{
+  response.body = request.user.status;
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2>Проблема 1: обработка ошибок</h2>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 170px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  db.User.get(req.userId, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, user)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">500</span>; <span class="hljs-comment">// internal server error</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) {
+      response.status = <span class="hljs-number">403</span>; <span class="hljs-comment">// unauthorized</span>
+    } <span class="hljs-keyword">else</span> {
+      request.user = <span class="hl-o">doSomethingComplexWithUser(user)</span>; <span class="hljs-comment">// may throw!!!</span>
+      next();
+    }
+  });
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section data-background="#000">
+          <div class="slide-code">
+            <div style="color: #fff; width: 1500px;" class="highlight ssmall">
+              <pre>TypeError: Cannot read property 'someProp' of null
+  at Object.&lt;anonymous&gt;
+  at processRequest (app.js:370:16)
+  at Module._compile (module.js:460:26)
+  at Object.Module._extensions..js (module.js:478:10)
+  at Module.load (module.js:355:32)
+  at Function.Module._load (module.js:310:12)
+  at Function.Module.runMain (module.js:501:10)
+  at startup (node.js:124:16)
+  at node.js:842:3
+ 
+Application exited.</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 170px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  db.User.get(req.userId, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, user)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">500</span>; <span class="hljs-comment">// internal server error</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) {
+      response.status = <span class="hljs-number">403</span>; <span class="hljs-comment">// unauthorized</span>
+    } <span class="hljs-keyword">else</span> {
+      request.user = <span class="hl-o">doSomethingComplexWithUser(user)</span>; <span class="hljs-comment">// may throw!!!</span>
+      next();
+    }
+  });
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 70px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  db.User.get(req.userId, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, user)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">500</span>; <span class="hljs-comment">// internal server error</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) {
+      response.status = <span class="hljs-number">403</span>; <span class="hljs-comment">// unauthorized</span>
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">try</span> {
+        request.user = doSomethingComplexWithUser(user); <span class="hljs-comment">// may throw</span>
+        next();
+      } <span class="hljs-keyword">catch</span> (err) {
+        response.status = <span class="hljs-number">500</span>; <span class="hljs-comment">// internal server error</span>
+      }
+    }
+  });
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 70px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(next)</span> </span>{ <span class="hljs-comment">// автоматически оборачивается в co</span>
+  <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">yield</span> db.User.get(req.userId);
+  <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) {
+    <span class="hljs-keyword">this</span>.throw(<span class="hljs-number">403</span>); <span class="hljs-comment">// unauthorized</span>
+  }
+  <span class="hljs-keyword">this</span>.user = doSomethingComplexWithUser(user); <span class="hljs-comment">// may throw - it's ok</span>
+  <span class="hljs-keyword">yield</span> next();
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2>Проблема 2: нет обратного хода</h2>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 70px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hljs-keyword">var</span> t0 = <span class="hljs-built_in">Date</span>.now();
+  next();
+  <span class="hljs-keyword">var</span> dt = <span class="hljs-built_in">Date</span>.now() - t0;
+  response.set(<span class="hljs-string">'Response-Time'</span>, dt);
+});
+ 
+app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  readFile(<span class="hljs-string">'index.html'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, text)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">404</span>;
+    } <span class="hljs-keyword">else</span> {
+      response.body = text;
+    }
+  });
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 70px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hljs-keyword">var</span> <span class="hl-o">t0 = <span class="hljs-built_in">Date</span>.now()</span>;
+  next();
+  <span class="hljs-keyword">var</span> dt = <span class="hljs-built_in">Date</span>.now() - t0;
+  response.set(<span class="hljs-string">'Response-Time'</span>, dt);
+});
+ 
+app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  readFile(<span class="hljs-string">'index.html'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, text)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">404</span>;
+    } <span class="hljs-keyword">else</span> {
+      response.body = text;
+    }
+  });
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 70px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hljs-keyword">var</span> t0 = <span class="hljs-built_in">Date</span>.now();
+  <span class="hl-o">next()</span>;
+  <span class="hljs-keyword">var</span> dt = <span class="hljs-built_in">Date</span>.now() - t0;
+  response.set(<span class="hljs-string">'Response-Time'</span>, dt);
+});
+ 
+app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hl-o">readFile(<span class="hljs-string">'index.html'</span></span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, text)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">404</span>;
+    } <span class="hljs-keyword">else</span> {
+      response.body = text;
+    }
+  });
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 70px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hljs-keyword">var</span> t0 = <span class="hljs-built_in">Date</span>.now();
+  next();
+  <span class="hl-o"><span class="hljs-keyword">var</span> dt = <span class="hljs-built_in">Date</span>.now() - t0</span>;
+  <span class="hl-o">response.set(<span class="hljs-string">'Response-Time'</span>, dt)</span>;
+});
+ 
+app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  readFile(<span class="hljs-string">'index.html'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, text)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">404</span>;
+    } <span class="hljs-keyword">else</span> {
+      response.body = text;
+    }
+  });
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 70px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hljs-keyword">var</span> t0 = <span class="hljs-built_in">Date</span>.now();
+  next();
+  <span class="hljs-keyword">var</span> dt = <span class="hljs-built_in">Date</span>.now() - t0;
+  response.set(<span class="hljs-string">'Response-Time'</span>, dt);
+});
+ 
+app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  readFile(<span class="hljs-string">'index.html'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, text)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">404</span>;
+    } <span class="hljs-keyword">else</span> {
+      response.body = text;
+    }
+  });
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 70px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre>app.use(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  <span class="hljs-keyword">var</span> t0 = <span class="hljs-built_in">Date</span>.now();
+  next();
+  <span class="hljs-keyword">var</span> dt = <span class="hljs-built_in">Date</span>.now() - t0;
+  response.set(<span class="hljs-string">'Response-Time'</span>, dt);
+});
+ 
+app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request, response, next)</span> </span>{
+  readFile(<span class="hljs-string">'index.html'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, text)</span> </span>{
+    <span class="hljs-keyword">if</span> (err) {
+      response.status = <span class="hljs-number">404</span>;
+    } <span class="hljs-keyword">else</span> {
+      <span class="hl-o">response.body = text</span>;
+    }
+  });
+});</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 70px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> readFile = promisify(fs.readFile),
+    router = <span class="hljs-keyword">new</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">'koa-router'</span>)();
+ 
+app.use(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(next)</span> </span>{
+  <span class="hljs-keyword">var</span> t0 = <span class="hljs-built_in">Date</span>.now();
+  <span class="hljs-keyword">yield</span> next();
+  <span class="hljs-keyword">var</span> dt = <span class="hljs-built_in">Date</span>.now() - t0;
+  response.set(<span class="hljs-string">'Response-Time'</span>, dt);
+});
+ 
+router.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> text = <span class="hljs-keyword">yield</span> readFile(<span class="hljs-string">'index.html'</span>);
+  response.body = text;
+});
+ 
+app.use(router);</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 70px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> readFile = promisify(fs.readFile),
+    router = <span class="hljs-keyword">new</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">'koa-router'</span>)();
+ 
+app.use(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(next)</span> </span>{
+  <span class="hljs-keyword">var</span> <span class="hl-o">t0 = <span class="hljs-built_in">Date</span>.now()</span>;
+  <span class="hljs-keyword">yield</span> next();
+  <span class="hljs-keyword">var</span> dt = <span class="hljs-built_in">Date</span>.now() - t0;
+  response.set(<span class="hljs-string">'Response-Time'</span>, dt);
+});
+ 
+router.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> text = <span class="hljs-keyword">yield</span> readFile(<span class="hljs-string">'index.html'</span>);
+  response.body = text;
+});
+ 
+app.use(router);</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 70px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> readFile = promisify(fs.readFile),
+    router = <span class="hljs-keyword">new</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">'koa-router'</span>)();
+ 
+app.use(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(next)</span> </span>{
+  <span class="hljs-keyword">var</span> t0 = <span class="hljs-built_in">Date</span>.now();
+  <span class="hl-o"><span class="hljs-keyword">yield</span> next()</span>;
+  <span class="hljs-keyword">var</span> dt = <span class="hljs-built_in">Date</span>.now() - t0;
+  response.set(<span class="hljs-string">'Response-Time'</span>, dt);
+});
+ 
+router.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> text = <span class="hl-o"><span class="hljs-keyword">yield</span> readFile(<span class="hljs-string">'index.html'</span>)</span>;
+  response.body = text;
+});
+ 
+app.use(router);</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 70px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> readFile = promisify(fs.readFile),
+    router = <span class="hljs-keyword">new</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">'koa-router'</span>)();
+ 
+app.use(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(next)</span> </span>{
+  <span class="hljs-keyword">var</span> t0 = <span class="hljs-built_in">Date</span>.now();
+  <span class="hl-o"><span class="hljs-keyword">yield</span> next()</span>;
+  <span class="hljs-keyword">var</span> dt = <span class="hljs-built_in">Date</span>.now() - t0;
+  response.set(<span class="hljs-string">'Response-Time'</span>, dt);
+});
+ 
+router.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> text = <span class="hljs-keyword">yield</span> readFile(<span class="hljs-string">'index.html'</span>);
+  <span class="hl-o">response.body = text</span>;
+});
+ 
+app.use(router);</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 70px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> readFile = promisify(fs.readFile),
+    router = <span class="hljs-keyword">new</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">'koa-router'</span>)();
+ 
+app.use(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(next)</span> </span>{
+  <span class="hljs-keyword">var</span> t0 = <span class="hljs-built_in">Date</span>.now();
+  <span class="hljs-keyword">yield</span> next();
+  <span class="hljs-keyword">var</span> <span class="hl-o">dt = <span class="hljs-built_in">Date</span>.now() - t0</span>;
+  <span class="hl-o">response.set(<span class="hljs-string">'Response-Time'</span>, dt)</span>;
+});
+ 
+router.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> text = <span class="hljs-keyword">yield</span> readFile(<span class="hljs-string">'index.html'</span>);
+  response.body = text;
+});
+ 
+app.use(router);</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="slide-code">
+            <div style="left: 40px; top: 70px; width: 1500px;" class="highlight hljs lang-js tiny">
+              <pre><span class="hljs-keyword">var</span> readFile = promisify(fs.readFile),
+    router = <span class="hljs-keyword">new</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">'koa-router'</span>)();
+ 
+app.use(<span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">(next)</span> </span>{
+  <span class="hljs-keyword">var</span> t0 = <span class="hljs-built_in">Date</span>.now();
+  <span class="hljs-keyword">yield</span> next();
+  <span class="hljs-keyword">var</span> dt = <span class="hljs-built_in">Date</span>.now() - t0;
+  response.set(<span class="hljs-string">'Response-Time'</span>, dt);
+});
+ 
+router.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>*<span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> text = <span class="hljs-keyword">yield</span> readFile(<span class="hljs-string">'index.html'</span>);
+  response.body = text;
+});
+ 
+app.use(router);</pre>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2>Can I use generators?</h2>
+        </section>
+        <section>
+          <h3>Node.js &gt;= 0.11.3</h3><br>
+          <h3>sebmck/6to5</h3><br>
+          <h3>facebook/regenerator</h3><br>
+          <h3>google/traceur-compiler</h3>
+        </section>
+        <section>
+          <h2>Спасибо!</h2>
+        </section>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </div>
+    </div>
+  </body>
+</html>
